@@ -1,17 +1,18 @@
 on:
   rss:
-    url: https://hnrss.org/newest?points=300&count=3
+    url: https://github.com/ronething-bot/ifttt-release-demo/releases.atom
+    # url: https://github.com/ruanyf/weekly/releases.atom
 jobs:
   print:
     name: Print
     runs-on: ubuntu-latest
     steps:
-      - name: Print Outputs
-        env:
-          title: ${{on.rss.outputs.title}}
-          contentSnippet: ${{on.rss.outputs.contentSnippet}}
-          link: ${{on.rss.outputs.link}}
-        run: |
-          echo title: $title
-          echo contentSnippet: $contentSnippet
-          echo link: $link
+      - name: Make a HTTP Request      
+        uses: actionsflow/axios@v1
+        with:
+          url: ${{ secrets.SLACK_URL }}
+          method: POST
+          body: |
+            {
+              "text": "${{on.rss.outputs.title}} ${{on.rss.outputs.link}}"
+            }
