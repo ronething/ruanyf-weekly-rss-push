@@ -40,5 +40,5 @@ jobs:
           method: POST
           body: |
             {
-              "text": "${{on.rss.outputs.title}} ${{on.rss.outputs.link}} ${{ steps.set-link.outputs.result }} 111"
+              "text": "${{on.rss.outputs.title}} ${{on.rss.outputs.link}} <<<${{ steps.set-link.outputs.result }}>>>"
             }
