@@ -2,11 +2,36 @@ on:
   rss:
     url: https://github.com/ronething-bot/ifttt-release-demo/releases.atom
     # url: https://github.com/ruanyf/weekly/releases.atom
+    config:
+      limit: 3
+      timeZone: Asia/Shanghai
 jobs:
-  print:
-    name: Print
+  operation:
+    name: Rss Operation
     runs-on: ubuntu-latest
     steps:
+      - name: Print Outputs
+        env:
+          title: ${{on.rss.outputs.title}}
+          link: ${{on.rss.outputs.link}}
+        run: |
+          echo title: $title
+          echo link: $link
+      - name: rewrite url
+        id: set-link
+        uses: actions/github-script@v4
+        env:
+          link: ${{ on.rss.outputs.link }}
+        with:
+          script: |
+            let { link } = process.env
+            console.log("link is", link)
+            let tags = link.split("/")
+            let tag = tags[tags.lastIndex]
+            console.log("tag is", tag)
+            let newLink = `https://github.com/ruanyf/weekly/blob/master/docs/${tag}.md`
+            console.log("new link is", newLink)
+            return newLink
       - name: Make a HTTP Request      
         uses: actionsflow/axios@v1
         with:
@@ -14,5 +39,5 @@ jobs:
           method: POST
           body: |
             {
-              "text": "${{on.rss.outputs.title}} ${{on.rss.outputs.link}}"
+              "text": "${{on.rss.outputs.title}} ${{on.rss.outputs.link}} ${{ steps.set-link.outputs.result }} 11111"
             }
