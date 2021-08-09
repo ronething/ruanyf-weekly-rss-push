@@ -23,6 +23,7 @@ jobs:
         env:
           link: ${{ on.rss.outputs.link }}
         with:
+          result-encoding: string
           script: |
             let { link } = process.env
             console.log("link is", link)
@@ -40,5 +41,5 @@ jobs:
           method: POST
           body: |
             {
-              "text": "${{on.rss.outputs.title}} ${{on.rss.outputs.link}} <<<${{ steps.set-link.outputs.result }}>>>"
+              "text": "${{on.rss.outputs.title}} ${{on.rss.outputs.link}} ${{steps.set-link.outputs.result}}"
             }
