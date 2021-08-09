@@ -27,7 +27,8 @@ jobs:
             let { link } = process.env
             console.log("link is", link)
             let tags = link.split("/")
-            let tag = tags[tags.lastIndex]
+            console.log("tags is", tags)
+            let tag = tags[tags.length-1]
             console.log("tag is", tag)
             let newLink = `https://github.com/ruanyf/weekly/blob/master/docs/${tag}.md`
             console.log("new link is", newLink)
@@ -39,5 +40,5 @@ jobs:
           method: POST
           body: |
             {
-              "text": "${{on.rss.outputs.title}} ${{on.rss.outputs.link}} ${{ steps.set-link.outputs.result }} 11111"
+              "text": "${{on.rss.outputs.title}} ${{on.rss.outputs.link}} ${{ steps.set-link.outputs.result }} 111"
             }
