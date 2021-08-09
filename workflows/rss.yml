@@ -3,7 +3,7 @@ on:
     # url: https://github.com/ronething-bot/ifttt-release-demo/releases.atom
     url: https://github.com/ruanyf/weekly/releases.atom
     config:
-      limit: 3
+      limit: 2
       timeZone: Asia/Shanghai
 jobs:
   operation:
@@ -34,7 +34,7 @@ jobs:
             let newLink = `https://github.com/ruanyf/weekly/blob/master/docs/${tag}.md`
             console.log("new link is", newLink)
             return newLink
-      - name: Make a HTTP Request      
+      - name: Post To Slack
         uses: actionsflow/axios@v1
         with:
           url: ${{ secrets.SLACK_URL }}
@@ -42,4 +42,16 @@ jobs:
           body: |
             {
               "text": "${{on.rss.outputs.title}} ${{steps.set-link.outputs.result}}"
+            }
+      - name: Post To WeCom
+        uses: actionsflow/axios@v1
+        with:
+          url: ${{ secrets.WECOM_URL }}
+          method: POST
+          body: |
+            {
+              "msgtype": "text",
+              "text": {
+                "content": "${{on.rss.outputs.title}} ${{steps.set-link.outputs.result}}"
+              }
             }
