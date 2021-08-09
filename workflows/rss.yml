@@ -1,7 +1,7 @@
 on:
   rss:
-    url: https://github.com/ronething-bot/ifttt-release-demo/releases.atom
-    # url: https://github.com/ruanyf/weekly/releases.atom
+    # url: https://github.com/ronething-bot/ifttt-release-demo/releases.atom
+    url: https://github.com/ruanyf/weekly/releases.atom
     config:
       limit: 3
       timeZone: Asia/Shanghai
@@ -23,7 +23,7 @@ jobs:
         env:
           link: ${{ on.rss.outputs.link }}
         with:
-          result-encoding: string
+          result-encoding: string # 关键点 下面的 result 直接引用就是 string 类型
           script: |
             let { link } = process.env
             console.log("link is", link)
@@ -41,5 +41,5 @@ jobs:
           method: POST
           body: |
             {
-              "text": "${{on.rss.outputs.title}} ${{on.rss.outputs.link}} ${{steps.set-link.outputs.result}}"
+              "text": "${{on.rss.outputs.title}} ${{steps.set-link.outputs.result}}"
             }
