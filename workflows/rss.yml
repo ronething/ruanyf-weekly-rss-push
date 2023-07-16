@@ -21,8 +21,9 @@ jobs:
         run: |
           string=${{ on.rss.outputs.link }}
           issue=${string##*/}
-          echo "issue is ${issue}"
-          echo "ISSUE=$issue" >> $GITHUB_ENV
+          new_link=https://github.com/ruanyf/weekly/blob/master/docs/${issue}.md
+          echo "new_link: ${new_link}"
+          echo "NEW_LINK=$new_link" >> $GITHUB_ENV
       - name: Post To Slack
         uses: actionsflow/axios@v1
         with:
@@ -30,7 +31,7 @@ jobs:
           method: POST
           body: |
             {
-              "text": "${{on.rss.outputs.title}} ${{ env.ISSUE }}"
+              "text": "${{on.rss.outputs.title}} ${{ env.NEW_LINK }}"
             }
       # - name: Post To WeCom
       #   uses: actionsflow/axios@v1
@@ -41,6 +42,6 @@ jobs:
       #       {
       #         "msgtype": "text",
       #         "text": {
-      #           "content": "${{on.rss.outputs.title}} ${{steps.set-link.outputs.result}}"
+      #           "content": "${{on.rss.outputs.title}} ${{ env.NEW_LINK }}"
       #         }
       #       }
