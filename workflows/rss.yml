@@ -33,15 +33,15 @@ jobs:
             {
               "text": "${{on.rss.outputs.title}} ${{ env.NEW_LINK }}"
             }
-      # - name: Post To WeCom
-      #   uses: actionsflow/axios@v1
-      #   with:
-      #     url: ${{ secrets.WECOM_URL }}
-      #     method: POST
-      #     body: |
-      #       {
-      #         "msgtype": "text",
-      #         "text": {
-      #           "content": "${{on.rss.outputs.title}} ${{ env.NEW_LINK }}"
-      #         }
-      #       }
+      - name: Post To WeCom
+        uses: actionsflow/axios@v1
+        with:
+          url: ${{ secrets.WECOM_URL }}
+          method: POST
+          body: |
+            {
+              "msgtype": "text",
+              "text": {
+                "content": "${{on.rss.outputs.title}} ${{ env.NEW_LINK }}"
+              }
+            }
