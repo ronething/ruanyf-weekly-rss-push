@@ -18,23 +18,12 @@ jobs:
         run: |
           echo title: $title
           echo link: $link
-      - name: rewrite url
-        id: set-link
-        uses: actions/github-script@v6
-        env:
-          link: ${{ on.rss.outputs.link }}
-        with:
-          result-encoding: string # 关键点 下面的 result 直接引用就是 string 类型
-          script: |
-            let { link } = process.env
-            console.log("link is", link)
-            let tags = link.split("/")
-            console.log("tags is", tags)
-            let tag = tags[tags.length-1]
-            console.log("tag is", tag)
-            let newLink = `https://github.com/ruanyf/weekly/blob/master/docs/${tag}.md`
-            console.log("new link is", newLink)
-            return newLink
+      - name: Extract string
+        id: extract_string
+        run: |
+          string="https://github.com/ruanyf/weekly/releases/tag/issue-260"
+          issue=${string##*/}
+          echo "ISSUE=$issue" >> $GITHUB_ENV
       - name: Post To Slack
         uses: actionsflow/axios@v1
         with:
@@ -42,7 +31,7 @@ jobs:
           method: POST
           body: |
             {
-              "text": "${{on.rss.outputs.title}} ${{steps.set-link.outputs.result}}"
+              "text": "${{on.rss.outputs.title}} ${{ ISSUE }}"
             }
       # - name: Post To WeCom
       #   uses: actionsflow/axios@v1
