@@ -1,9 +1,10 @@
 on:
   rss:
     # url: https://github.com/ronething-bot/ifttt-release-demo/releases.atom
-    url: https://github.com/ruanyf/weekly/releases.atom
+    # url: https://github.com/ruanyf/weekly/releases.atom
+    url: https://blog.ronething.cn/atom.xml
     config:
-      limit: 5
+      limit: 2
       timeZone: Asia/Shanghai
 jobs:
   operation:
