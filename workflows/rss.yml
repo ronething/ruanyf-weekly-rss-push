@@ -1,8 +1,6 @@
 on:
   rss:
-    # url: https://github.com/ronething-bot/ifttt-release-demo/releases.atom
-    # url: https://github.com/ruanyf/weekly/releases.atom
-    url: https://blog.ronething.cn/atom.xml
+    url: https://github.com/ruanyf/weekly/releases.atom
     config:
       limit: 2
       timeZone: Asia/Shanghai
@@ -21,8 +19,9 @@ jobs:
       - name: Extract string
         id: extract_string
         run: |
-          string="https://github.com/ruanyf/weekly/releases/tag/issue-260"
+          string=${{ on.rss.outputs.link }}
           issue=${string##*/}
+          echo "issue is ${issue}"
           echo "ISSUE=$issue" >> $GITHUB_ENV
       - name: Post To Slack
         uses: actionsflow/axios@v1
@@ -31,7 +30,7 @@ jobs:
           method: POST
           body: |
             {
-              "text": "${{on.rss.outputs.title}} ${{ ISSUE }}"
+              "text": "${{on.rss.outputs.title}} ${{ env.ISSUE }}"
             }
       # - name: Post To WeCom
       #   uses: actionsflow/axios@v1
