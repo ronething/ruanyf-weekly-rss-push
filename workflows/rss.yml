@@ -19,7 +19,7 @@ jobs:
           echo link: $link
       - name: rewrite url
         id: set-link
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         env:
           link: ${{ on.rss.outputs.link }}
         with:
@@ -43,15 +43,15 @@ jobs:
             {
               "text": "${{on.rss.outputs.title}} ${{steps.set-link.outputs.result}}"
             }
-      - name: Post To WeCom
-        uses: actionsflow/axios@v1
-        with:
-          url: ${{ secrets.WECOM_URL }}
-          method: POST
-          body: |
-            {
-              "msgtype": "text",
-              "text": {
-                "content": "${{on.rss.outputs.title}} ${{steps.set-link.outputs.result}}"
-              }
-            }
+      # - name: Post To WeCom
+      #   uses: actionsflow/axios@v1
+      #   with:
+      #     url: ${{ secrets.WECOM_URL }}
+      #     method: POST
+      #     body: |
+      #       {
+      #         "msgtype": "text",
+      #         "text": {
+      #           "content": "${{on.rss.outputs.title}} ${{steps.set-link.outputs.result}}"
+      #         }
+      #       }
