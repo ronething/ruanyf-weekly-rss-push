@@ -3,27 +3,28 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [ruanyf-weekly-rss-push](#ruanyf-weekly-rss-push)
-  - [usage](#usage)
+  - [使用说明](#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
   - [效果图](#%E6%95%88%E6%9E%9C%E5%9B%BE)
-  - [acknowledgement](#acknowledgement)
+  - [致谢](#%E8%87%B4%E8%B0%A2)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## ruanyf-weekly-rss-push
 
-基于 actionsflow 实现科学爱好者周刊 rss feed 推送, 目前支持 slack/wecom
+基于 GitHub Actions 实现科学爱好者周刊 RSS feed 推送服务，支持推送到 Slack 和企业微信。
 
-### usage
+### 使用说明
 
-- fork 此仓库
-- Secrets Actions 中添加 SLACK_URL 和 WECOM_URL 相对应的值即可
-- 定时策略可在 .github/workflows 目录下面进行相应修改
+1. Fork 此仓库到你的账户
+2. 在仓库的 Settings -> Secrets and Variables -> Actions 中添加以下密钥：
+   - `SLACK_URL`: Slack Webhook URL（如需推送到 Slack）
+   - `WECOM_URL`: 企业微信 Webhook URL（如需推送到企业微信）
+3. GitHub Actions 会自动按照预设时间运行检查并推送更新
 
 ### 效果图
 
-![wecom](./img/wecom.png)_
+![wecom](./img/wecom.png)
 
-### acknowledgement
+### 致谢
 
-- ruanyf/weekly [issue-190](https://github.com/ruanyf/weekly/issues/2132)
-- [actionsflow](https://github.com/actionsflow/actionsflow)
+- [ruanyf/weekly](https://github.com/ruanyf/weekly) [issue-190](https://github.com/ruanyf/weekly/issues/2132)

@@ -32,6 +32,6 @@ jobs:
       - name: Run RSS Push
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
-          # WECOM_TOKEN: ${{ secrets.WECOM_TOKEN }}
+          WECOM_TOKEN: ${{ secrets.WECOM_URL }}
           CACHE_DIR: cache
         run: ./rss-push

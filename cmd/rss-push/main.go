@@ -80,4 +80,6 @@ func main() {
 			log.Printf("Failed to mark article as pushed: %v\n", err)
 		}
 	}
+
+	log.Println("All articles pushed")
 }
