@@ -1,6 +1,8 @@
 package notifier
 
 import (
+	"log"
+
 	"github.com/cloud-org/msgpush"
 )
 
@@ -15,7 +17,9 @@ func NewWeComNotifier(token string) *WeComNotifier {
 }
 
 func (w *WeComNotifier) Notify(msg Message) error {
-	msgpush.NewWeCom(w.Token).SendText(msg.Title + "\n" + msg.URL)
+	if err := msgpush.NewWeCom(w.Token).SendText(msg.Title + "\n" + msg.URL); err != nil {
+		log.Printf("WeCom: Failed to send notification: %v\n", err)
+	}
 	return nil
 }
 
@@ -30,6 +34,8 @@ func NewSlackNotifier(webhookURL string) *SlackNotifier {
 }
 
 func (s *SlackNotifier) Notify(msg Message) error {
-	msgpush.NewSlack(s.WebhookURL).Send(msg.Title + "\n" + msg.URL)
+	if err := msgpush.NewSlack(s.WebhookURL).Send(msg.Title + "\n" + msg.URL); err != nil {
+		log.Printf("Slack: Failed to send notification: %v\n", err)
+	}
 	return nil
 }

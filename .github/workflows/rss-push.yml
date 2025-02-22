@@ -2,8 +2,17 @@ name: RSS Push
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # Run every 6 hours
-  workflow_dispatch:  # Allow manual trigger
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      use_slack:
+        description: 'Push to Slack'
+        type: boolean
+        default: true
+      use_wecom:
+        description: 'Push to WeCom'
+        type: boolean
+        default: true
 
 jobs:
   push:
@@ -31,7 +40,7 @@ jobs:
 
       - name: Run RSS Push
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
-          WECOM_TOKEN: ${{ secrets.WECOM_URL }}
+          SLACK_WEBHOOK_URL: ${{ inputs.use_slack && secrets.SLACK_URL || '' }}
+          WECOM_TOKEN: ${{ inputs.use_wecom && secrets.WECOM_URL || '' }}
           CACHE_DIR: cache
         run: ./rss-push
