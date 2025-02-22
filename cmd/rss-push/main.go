@@ -15,7 +15,7 @@ const (
 
 func main() {
 	slackURL := os.Getenv("SLACK_WEBHOOK_URL")
-	wecomURL := os.Getenv("WECOM_WEBHOOK_URL")
+	wecomToken := os.Getenv("WECOM_TOKEN")
 
 	// Initialize RSS parser
 	parser := feed.NewParser(RSSFeedURL, FeedLimit)
@@ -31,8 +31,8 @@ func main() {
 		notifiers = append(notifiers, notifier.NewSlackNotifier(slackURL))
 	}
 
-	if wecomURL != "" {
-		notifiers = append(notifiers, notifier.NewWeComNotifier(wecomURL))
+	if wecomToken != "" {
+		notifiers = append(notifiers, notifier.NewWeComNotifier(wecomToken))
 	}
 
 	if len(notifiers) == 0 {
