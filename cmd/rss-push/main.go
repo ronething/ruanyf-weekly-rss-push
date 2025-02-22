@@ -41,10 +41,14 @@ func main() {
 
 	if slackURL != "" {
 		notifiers = append(notifiers, notifier.NewSlackNotifier(slackURL))
+	} else {
+		log.Println("Warning: No Slack notifier configured")
 	}
 
 	if wecomToken != "" {
 		notifiers = append(notifiers, notifier.NewWeComNotifier(wecomToken))
+	} else {
+		log.Println("Warning: No WeCom notifier configured")
 	}
 
 	if len(notifiers) == 0 {
