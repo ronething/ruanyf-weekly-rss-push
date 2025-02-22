@@ -1,0 +1,37 @@
+name: RSS Push
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Run every 6 hours
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22.7'
+
+      - name: Cache articles
+        uses: actions/cache@v3
+        with:
+          path: cache
+          key: ${{ runner.os }}-articles-cache-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-articles-cache-
+
+      - name: Build
+        run: |
+          go mod tidy
+          go build -o rss-push ./cmd/rss-push
+
+      - name: Run RSS Push
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
+          # WECOM_TOKEN: ${{ secrets.WECOM_TOKEN }}
+          CACHE_DIR: cache
+        run: ./rss-push
