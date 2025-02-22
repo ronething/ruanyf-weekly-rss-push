@@ -3,6 +3,8 @@ package feed
 import (
 	"encoding/xml"
 	"net/http"
+	"regexp"
+	"strings"
 	"time"
 )
 
@@ -55,6 +57,20 @@ func (p *Parser) Parse() ([]Entry, error) {
 func ConvertToMarkdownURL(releaseURL string) string {
 	// Example: https://github.com/ruanyf/weekly/releases/tag/issue-xxx
 	// to: https://github.com/ruanyf/weekly/blob/master/docs/issue-xxx.md
-	issueNum := releaseURL[len(releaseURL)-3:]
+
+	// Split by "issue-" and take the last part
+	parts := strings.Split(releaseURL, "issue-")
+	if len(parts) != 2 {
+		return releaseURL // Return original URL if format doesn't match
+	}
+
+	// Extract only numbers from the issue part
+	re := regexp.MustCompile(`^\d+`)
+	issueNum := re.FindString(parts[1])
+	if issueNum == "" {
+		return releaseURL // Return original URL if no number found
+	}
+
+	// Construct the new URL
 	return "https://github.com/ruanyf/weekly/blob/master/docs/issue-" + issueNum + ".md"
 }

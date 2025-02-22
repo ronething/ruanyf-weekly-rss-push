@@ -15,6 +15,16 @@ func TestConvertToMarkdownURL(t *testing.T) {
 	}{
 		{
 			name:     "正常的 release URL",
+			input:    "https://github.com/ruanyf/weekly/releases/tag/issue-12",
+			expected: "https://github.com/ruanyf/weekly/blob/master/docs/issue-12.md",
+		},
+		{
+			name:     "正常的 release URL",
+			input:    "https://github.com/ruanyf/weekly/releases/tag/issue-1224",
+			expected: "https://github.com/ruanyf/weekly/blob/master/docs/issue-1224.md",
+		},
+		{
+			name:     "正常的 release URL",
 			input:    "https://github.com/ruanyf/weekly/releases/tag/issue-123",
 			expected: "https://github.com/ruanyf/weekly/blob/master/docs/issue-123.md",
 		},
