@@ -8,11 +8,11 @@ on:
       use_slack:
         description: 'Push to Slack'
         type: boolean
-        default: false
+        default: true
       use_wecom:
         description: 'Push to WeCom'
         type: boolean
-        default: false
+        default: true
 
 jobs:
   push:
