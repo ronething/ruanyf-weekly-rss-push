@@ -2,29 +2,50 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [ruanyf-weekly-rss-push](#ruanyf-weekly-rss-push)
-  - [使用说明](#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
-  - [效果图](#%E6%95%88%E6%9E%9C%E5%9B%BE)
-  - [致谢](#%E8%87%B4%E8%B0%A2)
+- [Ruanyf Weekly RSS Push](#ruanyf-weekly-rss-push)
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [Setup](#setup)
+  - [Preview](#preview)
+  - [Acknowledgments](#acknowledgments)
+  - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## ruanyf-weekly-rss-push
+# Ruanyf Weekly RSS Push
 
-基于 GitHub Actions 实现科学爱好者周刊 RSS feed 推送服务，支持推送到 Slack 和企业微信。
+[English](README.md) | [中文](README_zh.md)
 
-### 使用说明
+## Introduction
 
-1. Fork 此仓库到你的账户
-2. 在仓库的 Settings -> Secrets and Variables -> Actions 中添加以下密钥：
-   - `SLACK_URL`: Slack Webhook URL（如需推送到 Slack）
-   - `WECOM_URL`: 企业微信 Webhook URL（如需推送到企业微信）
-3. GitHub Actions 会自动按照预设时间运行检查并推送更新
+A Go-based service that automatically pushes updates from Ruanyf's Weekly RSS feed to Slack and WeCom (WeChat Work). Built with GitHub Actions for automated execution.
 
-### 效果图
+## Features
+
+- Automated RSS feed monitoring
+- Push notifications to:
+  - Slack
+  - WeCom (WeChat Work)
+- Runs on GitHub Actions
+- Written in Go for better performance
+
+## Setup
+
+1. Fork this repository
+2. Add the following secrets in your repository's Settings -> Secrets and Variables -> Actions:
+   - `SLACK_URL`: Slack Webhook URL (for Slack notifications)
+   - `WECOM_URL`: WeCom Webhook URL (for WeCom notifications)
+3. GitHub Actions will automatically run according to the preset schedule
+
+## Preview
 
 ![wecom](./img/wecom.png)
 
-### 致谢
+## Acknowledgments
 
-- [ruanyf/weekly](https://github.com/ruanyf/weekly) [issue-190](https://github.com/ruanyf/weekly/issues/2132)
+- [ruanyf/weekly](https://github.com/ruanyf/weekly)
+- Original issue discussion: [issue-190](https://github.com/ruanyf/weekly/issues/2132)
+
+## License
+
+MIT License
