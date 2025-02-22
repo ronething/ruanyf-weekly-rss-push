@@ -14,7 +14,15 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.21'
+          go-version: '1.22.7'
+
+      - name: Cache articles
+        uses: actions/cache@v3
+        with:
+          path: cache
+          key: ${{ runner.os }}-articles-cache-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-articles-cache-
 
       - name: Build
         run: |
@@ -24,5 +32,6 @@ jobs:
       - name: Run RSS Push
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
-          WECOM_WEBHOOK_URL: ${{ secrets.WECOM_URL }}
-        run: ./rss-push 
+          # WECOM_TOKEN: ${{ secrets.WECOM_TOKEN }}
+          CACHE_DIR: cache
+        run: ./rss-push
