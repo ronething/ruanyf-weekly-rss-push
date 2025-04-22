@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/ashing/ruanyf-weekly-rss-push/pkg/ai"
 	"github.com/ashing/ruanyf-weekly-rss-push/pkg/cache"
 	"github.com/ashing/ruanyf-weekly-rss-push/pkg/feed"
 	"github.com/ashing/ruanyf-weekly-rss-push/pkg/notifier"
@@ -36,6 +37,12 @@ func main() {
 		log.Fatalf("Failed to parse RSS feed: %v", err)
 	}
 
+	// Initialize AI content summarizer
+	summarizer, err := ai.NewContentSummarizer()
+	if err != nil {
+		log.Printf("Failed to initialize AI summarizer: %v, will continue without recommendations", err)
+	}
+
 	// Initialize notifiers
 	notifiers := []notifier.Notifier{}
 
@@ -65,10 +72,25 @@ func main() {
 			continue
 		}
 
+		// prepare the message content
 		msg := notifier.Message{
 			Title: entry.Title,
 			URL:   mdURL,
 		}
+
+		// if there is content and the AI summarizer is available, try to extract recommendations
+		if summarizer != nil && entry.Content.Src != "" {
+			log.Println("Extracting recommendations using AI...")
+			recommendations, err := summarizer.ExtractRecommendations(entry)
+			if err != nil {
+				log.Printf("Failed to extract recommendations: %v\n", err)
+			} else {
+				recommendationsText := ai.FormatRecommendationsText(recommendations)
+				msg.Recommendations = recommendationsText
+				log.Printf("Added %d recommendations to the message\n", len(recommendations))
+			}
+		}
+
 		log.Printf("Pushing new article: %+v\n", msg)
 
 		// Send notifications

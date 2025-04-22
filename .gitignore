@@ -291,3 +291,5 @@ dist
 .pnp.*
 
 bin/
+.cursor/
+cache/articles.json

@@ -17,6 +17,12 @@ type Entry struct {
 	Title   string    `xml:"title"`
 	Link    Link      `xml:"link"`
 	Updated time.Time `xml:"updated"`
+	Content Content   `xml:"content"`
+}
+
+type Content struct {
+	Type string `xml:"type,attr"`
+	Src  string `xml:",chardata"`
 }
 
 type Link struct {
