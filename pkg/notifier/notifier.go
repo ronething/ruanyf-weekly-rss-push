@@ -1,8 +1,9 @@
 package notifier
 
 type Message struct {
-	Title string
-	URL   string
+	Title           string
+	URL             string
+	Recommendations string
 }
 
 type Notifier interface {
