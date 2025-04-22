@@ -45,7 +45,7 @@ func (s *SlackNotifier) Notify(msg Message) error {
 	return nil
 }
 
-// formatMessageContent 格式化消息内容，包括标题、URL和推荐（如果有）
+// formatMessageContent formats the message content, including the title, URL, and recommendations (if any)
 func formatMessageContent(msg Message) string {
 	var sb strings.Builder
 

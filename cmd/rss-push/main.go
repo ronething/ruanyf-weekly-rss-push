@@ -72,13 +72,13 @@ func main() {
 			continue
 		}
 
-		// 准备消息内容
+		// prepare the message content
 		msg := notifier.Message{
 			Title: entry.Title,
 			URL:   mdURL,
 		}
 
-		// 如果有内容并且AI总结器可用，尝试提取推荐
+		// if there is content and the AI summarizer is available, try to extract recommendations
 		if summarizer != nil && entry.Content.Src != "" {
 			log.Println("Extracting recommendations using AI...")
 			recommendations, err := summarizer.ExtractRecommendations(entry)
