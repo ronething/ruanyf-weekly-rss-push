@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/ashing/ruanyf-weekly-rss-push/pkg/ai"
 	"github.com/ashing/ruanyf-weekly-rss-push/pkg/cache"
@@ -17,8 +18,8 @@ const (
 )
 
 func main() {
-	slackURL := os.Getenv("SLACK_WEBHOOK_URL")
-	wecomToken := os.Getenv("WECOM_TOKEN")
+	slackURLs := getMultipleValues("SLACK_WEBHOOK_URL")
+	wecomTokens := getMultipleValues("WECOM_TOKEN")
 
 	// Initialize cache
 	cacheDir := os.Getenv("CACHE_DIR")
@@ -46,14 +47,22 @@ func main() {
 	// Initialize notifiers
 	notifiers := []notifier.Notifier{}
 
-	if slackURL != "" {
-		notifiers = append(notifiers, notifier.NewSlackNotifier(slackURL))
+	// Initialize Slack notifiers
+	if len(slackURLs) > 0 {
+		for _, url := range slackURLs {
+			notifiers = append(notifiers, notifier.NewSlackNotifier(url))
+		}
+		log.Printf("Configured %d Slack notifier(s)", len(slackURLs))
 	} else {
 		log.Println("Warning: No Slack notifier configured")
 	}
 
-	if wecomToken != "" {
-		notifiers = append(notifiers, notifier.NewWeComNotifier(wecomToken))
+	// Initialize WeCom notifiers
+	if len(wecomTokens) > 0 {
+		for _, token := range wecomTokens {
+			notifiers = append(notifiers, notifier.NewWeComNotifier(token))
+		}
+		log.Printf("Configured %d WeCom notifier(s)", len(wecomTokens))
 	} else {
 		log.Println("Warning: No WeCom notifier configured")
 	}
@@ -108,4 +117,25 @@ func main() {
 	}
 
 	log.Println("All articles pushed")
+}
+
+// getMultipleValues gets multiple values from a single environment variable,
+// values are expected to be comma-separated
+func getMultipleValues(envKey string) []string {
+	value := os.Getenv(envKey)
+	if value == "" {
+		return []string{}
+	}
+
+	values := strings.Split(value, ",")
+	result := make([]string, 0, len(values))
+
+	for _, v := range values {
+		trimmed := strings.TrimSpace(v)
+		if trimmed != "" {
+			result = append(result, trimmed)
+		}
+	}
+
+	return result
 }
