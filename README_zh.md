@@ -19,7 +19,7 @@
 
 ## 简介
 
-这是一个基于 Go 语言开发的自动化服务，用于将阮一峰的科学爱好者周刊 RSS 推送到 Slack 和企业微信。该服务使用 GitHub Actions 实现自动化运行。
+这是一个基于 Go 语言开发的自动化服务，用于将阮一峰的科学爱好者周刊 RSS 推送到 Slack、企业微信和飞书。该服务使用 GitHub Actions 实现自动化运行。
 
 ## 特性
 
@@ -27,6 +27,7 @@
 - 支持推送到：
   - Slack
   - 企业微信
+  - 飞书
 - AI 驱动的内容分析和推荐提取
 - 基于 GitHub Actions 运行
 - 使用 Go 语言重写，性能更好
@@ -37,6 +38,7 @@
 2. 在仓库的 Settings -> Secrets and Variables -> Actions 中添加以下密钥：
    - `SLACK_URL`: Slack Webhook URL（用于 Slack 推送）
    - `WECOM_URL`: 企业微信 Webhook URL（用于企业微信推送）
+   - `FEISHU_URL`: 飞书机器人 Webhook URL（用于飞书推送）
    - `ARK_BASE_URL`: （可选）Ark API 的基础 URL
    - `ARK_API_KEY`: Ark AI API 密钥（用于 AI 内容分析）
    - `ARK_MODEL_ID`: Ark API 使用的模型 ID
@@ -64,4 +66,4 @@
 
 ## 开源协议
 
-MIT License 
+MIT License

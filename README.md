@@ -19,7 +19,7 @@
 
 ## Introduction
 
-A Go-based service that automatically pushes updates from Ruanyf's Weekly RSS feed to Slack and WeCom (WeChat Work). Built with GitHub Actions for automated execution.
+A Go-based service that automatically pushes updates from Ruanyf's Weekly RSS feed to Slack, WeCom (WeChat Work), and FeiShu. Built with GitHub Actions for automated execution.
 
 ## Features
 
@@ -27,6 +27,7 @@ A Go-based service that automatically pushes updates from Ruanyf's Weekly RSS fe
 - Push notifications to:
   - Slack
   - WeCom (WeChat Work)
+  - FeiShu
 - AI-powered content analysis and recommendation extraction
 - Runs on GitHub Actions
 - Written in Go for better performance
@@ -37,6 +38,7 @@ A Go-based service that automatically pushes updates from Ruanyf's Weekly RSS fe
 2. Add the following secrets in your repository's Settings -> Secrets and Variables -> Actions:
    - `SLACK_URL`: Slack Webhook URL (for Slack notifications)
    - `WECOM_URL`: WeCom Webhook URL (for WeCom notifications)
+   - `FEISHU_URL`: FeiShu bot Webhook URL (for FeiShu notifications)
    - `ARK_BASE_URL`: (Optional) Base URL for Ark API
    - `ARK_API_KEY`: Ark AI API key (for AI content analysis)
    - `ARK_MODEL_ID`: Model ID for Ark API

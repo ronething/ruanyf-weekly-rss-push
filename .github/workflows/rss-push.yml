@@ -13,6 +13,10 @@ on:
         description: 'Push to WeCom'
         type: boolean
         default: true
+      use_feishu:
+        description: 'Push to FeiShu'
+        type: boolean
+        default: true
 
 jobs:
   push:
@@ -43,6 +47,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
           WECOM_TOKEN: ${{ secrets.WECOM_URL }}
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_URL }}
           CACHE_DIR: cache
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
           ARK_BASE_URL: ${{ secrets.ARK_BASE_URL }}
@@ -54,6 +59,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ inputs.use_slack && secrets.SLACK_URL || '' }}
           WECOM_TOKEN: ${{ inputs.use_wecom && secrets.WECOM_URL || '' }}
+          FEISHU_WEBHOOK_URL: ${{ inputs.use_feishu && secrets.FEISHU_URL || '' }}
           CACHE_DIR: cache
           ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
           ARK_BASE_URL: ${{ secrets.ARK_BASE_URL }}

@@ -45,6 +45,25 @@ func (s *SlackNotifier) Notify(msg Message) error {
 	return nil
 }
 
+type FeiShuNotifier struct {
+	WebhookURL string
+}
+
+func NewFeiShuNotifier(webhookURL string) *FeiShuNotifier {
+	return &FeiShuNotifier{
+		WebhookURL: webhookURL,
+	}
+}
+
+func (f *FeiShuNotifier) Notify(msg Message) error {
+	content := formatMessageContent(msg)
+	if err := msgpush.NewFeiShu(f.WebhookURL).SendText(content); err != nil {
+		log.Printf("FeiShu: Failed to send notification: %v\n", err)
+		return err
+	}
+	return nil
+}
+
 // formatMessageContent formats the message content, including the title, URL, and recommendations (if any)
 func formatMessageContent(msg Message) string {
 	var sb strings.Builder

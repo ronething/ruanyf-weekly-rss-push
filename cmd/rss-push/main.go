@@ -20,6 +20,7 @@ const (
 func main() {
 	slackURLs := getMultipleValues("SLACK_WEBHOOK_URL")
 	wecomTokens := getMultipleValues("WECOM_TOKEN")
+	feishuURLs := getMultipleValues("FEISHU_WEBHOOK_URL")
 
 	// Initialize cache
 	cacheDir := os.Getenv("CACHE_DIR")
@@ -65,6 +66,16 @@ func main() {
 		log.Printf("Configured %d WeCom notifier(s)", len(wecomTokens))
 	} else {
 		log.Println("Warning: No WeCom notifier configured")
+	}
+
+	// Initialize FeiShu notifiers
+	if len(feishuURLs) > 0 {
+		for _, url := range feishuURLs {
+			notifiers = append(notifiers, notifier.NewFeiShuNotifier(url))
+		}
+		log.Printf("Configured %d FeiShu notifier(s)", len(feishuURLs))
+	} else {
+		log.Println("Warning: No FeiShu notifier configured")
 	}
 
 	if len(notifiers) == 0 {
